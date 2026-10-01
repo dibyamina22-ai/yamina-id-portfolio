@@ -7,7 +7,17 @@
 <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMyMTI0MkUiLz4KICA8dGV4dCB4PSIzMiIgeT0iNDQiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCBzZXJpZiIgZm9udC1zaXplPSIzNiIgZm9udC13ZWlnaHQ9IjYwMCIgZmlsbD0iI0I1NzcyQiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+WTwvdGV4dD4KPC9zdmc+">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<script>
+  try {
+    var t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t;
+    var z = localStorage.getItem('textsize'); if (z) document.documentElement.style.fontSize = z + '%';
+    var d = document.documentElement;
+    if (localStorage.getItem('skim') === 'on') d.dataset.skim = 'on';
+    if (localStorage.getItem('readable') === 'on') d.dataset.readable = 'on';
+    if (localStorage.getItem('motion') === 'off') d.dataset.motion = 'off';
+  } catch (e) {}
+</script>
 <style>
   :root {
     --ink: #21242E;
@@ -23,6 +33,7 @@
     --fg: var(--ink);
     --fg-muted: #5B5646;
     --accent: var(--rust);
+    --lift: 0%;
     box-sizing: border-box;
     padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
@@ -30,8 +41,8 @@
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --bg: #1B1E27;
-      --bg-raised: #23273353;
       --bg-raised: #262B37;
+      --lift: 45%;
       --fg: #EDE9DD;
       --fg-muted: #A7A190;
       --line: #3A3F4C;
@@ -44,6 +55,16 @@
     --fg: #EDE9DD;
     --fg-muted: #A7A190;
     --line: #3A3F4C;
+  }
+  :root[data-theme="dark"] { --lift: 45%; }
+  :root[data-theme="blue"] {
+    --bg: #0E2238;
+    --bg-raised: #16304D;
+    --fg: #E6EEF7;
+    --fg-muted: #9DB4CC;
+    --line: #27435F;
+    --accent: #6FB1E8;
+    --lift: 45%;
   }
   * { box-sizing: border-box; }
   html { scroll-padding-top: env(safe-area-inset-top, 0px); }
@@ -319,6 +340,69 @@
     color: var(--fg-muted);
   }
 
+  /* Accent text stays readable on dark and blue themes */
+  @supports (color: color-mix(in srgb, red, white)) {
+    .m-eyebrow, .module-row .m-go, .module-row:hover .m-title {
+      color: color-mix(in srgb, var(--m-accent, var(--accent)) calc(100% - var(--lift)), #fff);
+    }
+  }
+
+  /* Learning preferences */
+  .prefs { margin-top: 30px; padding-top: 6px; border-top: 1px solid var(--line); }
+  .seg { display: flex; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; margin-bottom: 10px; }
+  .seg button {
+    flex: 1; background: none; border: 0; border-right: 1px solid var(--line);
+    color: var(--fg-muted); font: inherit; font-size: 0.8rem; padding: 7px 4px; cursor: pointer;
+  }
+  .seg button:last-child { border-right: 0; }
+  .seg button[aria-pressed="true"] { background: var(--bg-raised); color: var(--fg); font-weight: 500; }
+  .seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+  /* Progress */
+  .progress { margin-top: 40px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg-raised); display: grid; gap: 10px; }
+  .progress-text { font-size: 0.92rem; color: var(--fg-muted); }
+  .progress-text strong { color: var(--fg); font-weight: 600; }
+  .progress-bar { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+  .progress-bar span { display: block; height: 100%; width: 0; background: var(--accent); transition: width .5s cubic-bezier(.16,1,.3,1); }
+  .progress-cta { justify-self: start; font-size: 0.92rem; font-weight: 500; text-decoration: none; color: var(--fg); border-bottom: 1px solid var(--accent); }
+  .module-row.done .m-title::after { content: " ✓ Launched"; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.78rem; font-weight: 500; color: var(--fg-muted); }
+  .rail nav a.nav-link.done::after { content: "✓"; float: right; margin-right: 4px; color: var(--fg-muted); }
+
+  /* Toggles */
+  .tog { width: 100%; display: flex; justify-content: space-between; align-items: center; background: none; border: 1px solid var(--line); border-radius: 4px; color: var(--fg-muted); font: inherit; font-size: 0.8rem; padding: 7px 10px; margin-bottom: 10px; cursor: pointer; text-align: left; }
+  .tog[aria-pressed="true"] { background: var(--bg-raised); color: var(--fg); font-weight: 500; }
+  .tog[aria-pressed="true"] .tog-state::before { content: "On"; }
+  .tog[aria-pressed="false"] .tog-state::before { content: "Off"; }
+  .tog:disabled { opacity: .6; cursor: default; }
+  .reset-btn { background: none; border: 0; padding: 4px 0; color: var(--fg-muted); font: inherit; font-size: 0.78rem; text-decoration: underline; cursor: pointer; }
+  .tog:focus-visible, .reset-btn:focus-visible, .player-btn:focus-visible, .launch-btn:focus-visible, .m-desc p:focus-visible, .about p:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* Reduce motion (manual) */
+  :root[data-motion="off"] *, :root[data-motion="off"] *::before, :root[data-motion="off"] *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  :root[data-motion="off"] .page.active, :root[data-motion="off"] .page.leaving { opacity: 1; transform: none; }
+
+  /* Readable font */
+  :root[data-readable="on"] * { font-family: 'Atkinson Hyperlegible', 'IBM Plex Sans', system-ui, sans-serif !important; }
+  :root[data-readable="on"] .m-desc p, :root[data-readable="on"] .about p, :root[data-readable="on"] .home-sub { line-height: 1.9; letter-spacing: 0.02em; word-spacing: 0.06em; }
+
+  /* Skim mode */
+  .skim-hint { display: none; margin-bottom: 22px; font-size: 0.85rem; color: var(--fg-muted); }
+  :root[data-skim="on"] .skim-hint { display: block; }
+  :root[data-skim="on"] body[data-page="home"] .skim-hint { display: none; }
+  :root[data-skim="on"] .m-desc p, :root[data-skim="on"] .about p { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; cursor: pointer; }
+  :root[data-skim="on"] .m-desc p.open, :root[data-skim="on"] .about p.open { display: block; -webkit-line-clamp: unset; line-clamp: unset; overflow: visible; }
+
+  /* In-page module player */
+  button.launch-btn { border: 0; font-family: inherit; cursor: pointer; }
+  .launch-btn[hidden], .launch-note[hidden], .player[hidden] { display: none; }
+  .player { margin-top: 34px; }
+  .player-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 12px; border: 1px solid var(--line); border-bottom: 0; border-radius: 6px 6px 0 0; background: var(--bg-raised); font-size: 0.85rem; color: var(--fg-muted); }
+  .player-actions { display: flex; gap: 8px; }
+  .player-btn { background: none; border: 1px solid var(--line); border-radius: 3px; color: var(--fg); font: inherit; font-size: 0.8rem; padding: 5px 10px; cursor: pointer; }
+  .player-btn:hover { background: var(--bg); }
+  .player-frame { display: block; width: 100%; aspect-ratio: 16 / 9; min-height: 320px; border: 1px solid var(--line); border-radius: 0 0 6px 6px; background: #fff; }
+  .player-fallback { display: inline-block; margin-top: 10px; font-size: 0.78rem; color: var(--fg-muted); }
+
   /* Mobile */
   .topbar { display: none; }
   @media (max-width: 820px) {
@@ -387,16 +471,42 @@
         <li style="padding: 7px 0; font-size: 0.9rem;"><a href="mailto:dibyamina22@gmail.com" style="text-decoration:none;">dibyamina22@gmail.com</a></li>
         <li style="padding: 7px 0; font-size: 0.9rem;"><a href="https://linkedin.com/in/yamina-dib-22769542b" target="_blank" style="text-decoration:none;">LinkedIn</a></li>
       </ul>
+      <div class="prefs">
+        <div class="rail-section-label">Learning preferences</div>
+        <div class="seg" role="group" aria-label="Theme">
+          <button type="button" data-theme-btn="auto">Auto</button>
+          <button type="button" data-theme-btn="light">Light</button>
+          <button type="button" data-theme-btn="dark">Dark</button>
+          <button type="button" data-theme-btn="blue">Blue</button>
+        </div>
+        <div class="seg" role="group" aria-label="Text size">
+          <button type="button" data-size="-" aria-label="Smaller text">A−</button>
+          <button type="button" data-size="reset" aria-label="Default text size">A</button>
+          <button type="button" data-size="+" aria-label="Larger text">A+</button>
+        </div>
+        <button type="button" class="tog" data-toggle="skim" aria-pressed="false"><span>Skim mode</span><span class="tog-state"></span></button>
+        <button type="button" class="tog" data-toggle="readable" aria-pressed="false"><span>Readable font</span><span class="tog-state"></span></button>
+        <button type="button" class="tog" data-toggle="motion" aria-pressed="false"><span>Reduce motion</span><span class="tog-state"></span></button>
+        <button type="button" class="reset-btn" id="resetPrefs">Reset preferences</button>
+      </div>
     </nav>
   </aside>
 
   <main class="main">
+
+    <div class="skim-hint">Skim mode is on. Click any paragraph to read it in full.</div>
 
     <!-- HOME -->
     <section class="page" id="page-home">
       <h1 class="home-lede">Designing learning experiences people actually finish.</h1>
       <p class="home-sub">I build e-learning modules that take a dry compliance requirement or a technical skill and turn it into something a learner can sit through, understand, and use the next day at work. Four projects below, built end to end: instructional strategy, scriptwriting, and development in Articulate Storyline.</p>
       <div class="home-focus">Currently based in Algiers, open to Instructional Design and Curriculum Development roles, remote or on-site, anywhere.</div>
+
+      <div class="progress" id="progress">
+        <div class="progress-text"><strong id="progressCount">0 of 4</strong> modules tried</div>
+        <div class="progress-bar" id="progressBar" role="progressbar" aria-label="Modules tried" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"><span id="progressFill"></span></div>
+        <a class="progress-cta" id="progressCta" href="#business-english">Start with Module 01 →</a>
+      </div>
 
       <div class="module-grid">
         <a href="#business-english" class="nav-link module-row" data-page="business-english" style="--m-accent:#3C6E71">
@@ -473,8 +583,13 @@
         <span class="skill-chip">Adult learning principles</span>
         <span class="skill-chip">Branching feedback</span>
       </div>
-      <a class="launch-btn" href="https://dibyamina22-ai.github.io/yamina-id-portfolio/business-english/index.html" target="_blank" rel="noopener">Launch module ↗</a>
-      <div class="launch-note">Opens in a new tab. Best viewed on desktop.</div>
+      <button type="button" class="launch-btn" data-src="https://dibyamina22-ai.github.io/yamina-id-portfolio/business-english/index.html">Launch module</button>
+      <div class="launch-note">Opens right here on this page. Best viewed on desktop.</div>
+      <div class="player" hidden>
+        <div class="player-bar"><span>Module preview</span><span class="player-actions"><button type="button" class="player-btn" data-fs>Full screen</button><button type="button" class="player-btn" data-close>Close</button></span></div>
+        <iframe class="player-frame" title="Course module" allow="fullscreen" loading="lazy"></iframe>
+        <a class="player-fallback" href="https://dibyamina22-ai.github.io/yamina-id-portfolio/business-english/index.html" target="_blank" rel="noopener">Trouble viewing? Open in a new tab</a>
+      </div>
     </section>
 
     <!-- MODULE: Cybersecurity -->
@@ -500,8 +615,13 @@
         <span class="skill-chip">Scenario-based design</span>
         <span class="skill-chip">Knowledge checks</span>
       </div>
-      <a class="launch-btn" href="https://dibyamina22-ai.github.io/yamina-id-portfolio/cybersecurity/index.html" target="_blank" rel="noopener">Launch module ↗</a>
-      <div class="launch-note">Opens in a new tab. Best viewed on desktop.</div>
+      <button type="button" class="launch-btn" data-src="https://dibyamina22-ai.github.io/yamina-id-portfolio/cybersecurity/index.html">Launch module</button>
+      <div class="launch-note">Opens right here on this page. Best viewed on desktop.</div>
+      <div class="player" hidden>
+        <div class="player-bar"><span>Module preview</span><span class="player-actions"><button type="button" class="player-btn" data-fs>Full screen</button><button type="button" class="player-btn" data-close>Close</button></span></div>
+        <iframe class="player-frame" title="Course module" allow="fullscreen" loading="lazy"></iframe>
+        <a class="player-fallback" href="https://dibyamina22-ai.github.io/yamina-id-portfolio/cybersecurity/index.html" target="_blank" rel="noopener">Trouble viewing? Open in a new tab</a>
+      </div>
     </section>
 
     <!-- MODULE: Aviation -->
@@ -527,8 +647,13 @@
         <span class="skill-chip">Safety &amp; compliance</span>
         <span class="skill-chip">Visual scenario design</span>
       </div>
-      <a class="launch-btn" href="https://dibyamina22-ai.github.io/yamina-id-portfolio/aviation/index.html" target="_blank" rel="noopener">Launch module ↗</a>
-      <div class="launch-note">Opens in a new tab. Best viewed on desktop.</div>
+      <button type="button" class="launch-btn" data-src="https://dibyamina22-ai.github.io/yamina-id-portfolio/aviation/index.html">Launch module</button>
+      <div class="launch-note">Opens right here on this page. Best viewed on desktop.</div>
+      <div class="player" hidden>
+        <div class="player-bar"><span>Module preview</span><span class="player-actions"><button type="button" class="player-btn" data-fs>Full screen</button><button type="button" class="player-btn" data-close>Close</button></span></div>
+        <iframe class="player-frame" title="Course module" allow="fullscreen" loading="lazy"></iframe>
+        <a class="player-fallback" href="https://dibyamina22-ai.github.io/yamina-id-portfolio/aviation/index.html" target="_blank" rel="noopener">Trouble viewing? Open in a new tab</a>
+      </div>
     </section>
 
     <!-- MODULE: Insurance -->
@@ -554,8 +679,13 @@
         <span class="skill-chip">Terminology training</span>
         <span class="skill-chip">Sequenced learning</span>
       </div>
-      <a class="launch-btn" href="https://dibyamina22-ai.github.io/yamina-id-portfolio/insurance/index.html" target="_blank" rel="noopener">Launch module ↗</a>
-      <div class="launch-note">Opens in a new tab. Best viewed on desktop.</div>
+      <button type="button" class="launch-btn" data-src="https://dibyamina22-ai.github.io/yamina-id-portfolio/insurance/index.html">Launch module</button>
+      <div class="launch-note">Opens right here on this page. Best viewed on desktop.</div>
+      <div class="player" hidden>
+        <div class="player-bar"><span>Module preview</span><span class="player-actions"><button type="button" class="player-btn" data-fs>Full screen</button><button type="button" class="player-btn" data-close>Close</button></span></div>
+        <iframe class="player-frame" title="Course module" allow="fullscreen" loading="lazy"></iframe>
+        <a class="player-fallback" href="https://dibyamina22-ai.github.io/yamina-id-portfolio/insurance/index.html" target="_blank" rel="noopener">Trouble viewing? Open in a new tab</a>
+      </div>
     </section>
 
   </main>
@@ -564,7 +694,8 @@
 <script>
   const pages = ['home','about','business-english','cybersecurity','aviation','insurance'];
   let currentPage = null;
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const motionReduced = () => motionQuery.matches || document.documentElement.dataset.motion === 'off';
 
   function route() {
     let hash = (location.hash || '#home').slice(1);
@@ -579,14 +710,16 @@
     });
     document.getElementById('rail').classList.remove('open');
 
+    if (prevEl) closePlayer(prevEl);
     const swap = () => {
+      document.body.dataset.page = hash;
       if (prevEl) { prevEl.classList.remove('active', 'leaving'); }
       nextEl.classList.add('active');
       window.scrollTo(0,0);
       currentPage = hash;
     };
 
-    if (prevEl && !reduceMotion) {
+    if (prevEl && !motionReduced()) {
       prevEl.classList.add('leaving');
       prevEl.classList.remove('active');
       setTimeout(swap, 200);
@@ -596,6 +729,105 @@
   }
   window.addEventListener('hashchange', route);
   route();
+
+  // Learner preferences + progress (saved in this browser only)
+  const root = document.documentElement;
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+    del(k) { try { localStorage.removeItem(k); } catch (e) {} }
+  };
+
+  function applyTheme(t) {
+    if (t === 'auto') { root.removeAttribute('data-theme'); store.del('theme'); }
+    else { root.dataset.theme = t; store.set('theme', t); }
+    document.querySelectorAll('[data-theme-btn]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.themeBtn === t)));
+  }
+  document.querySelectorAll('[data-theme-btn]').forEach(b => b.addEventListener('click', () => applyTheme(b.dataset.themeBtn)));
+  applyTheme(store.get('theme') || 'auto');
+
+  let size = parseInt(store.get('textsize'), 10) || 100;
+  document.querySelectorAll('[data-size]').forEach(b => b.addEventListener('click', () => {
+    const a = b.dataset.size;
+    size = a === 'reset' ? 100 : Math.max(90, Math.min(130, size + (a === '+' ? 10 : -10)));
+    root.style.fontSize = size + '%';
+    store.set('textsize', size);
+  }));
+
+  const modules = ['business-english', 'cybersecurity', 'aviation', 'insurance'];
+  function getTried() { try { return JSON.parse(store.get('tried') || '[]'); } catch (e) { return []; } }
+  function renderProgress() {
+    const tried = getTried();
+    document.querySelectorAll('a.nav-link[data-page]').forEach(a => a.classList.toggle('done', tried.includes(a.dataset.page)));
+    document.getElementById('progressCount').textContent = tried.length + ' of ' + modules.length;
+    document.getElementById('progressFill').style.width = (tried.length / modules.length * 100) + '%';
+    document.getElementById('progressBar').setAttribute('aria-valuenow', tried.length);
+    const next = modules.find(m => !tried.includes(m));
+    const cta = document.getElementById('progressCta');
+    if (next) {
+      cta.textContent = (tried.length ? 'Continue with Module ' : 'Start with Module ') + '0' + (modules.indexOf(next) + 1) + ' →';
+      cta.setAttribute('href', '#' + next);
+    } else {
+      cta.textContent = "You've tried all four. Get in touch →";
+      cta.setAttribute('href', 'mailto:dibyamina22@gmail.com');
+    }
+  }
+  function markTried(id) {
+    const tried = getTried();
+    if (!tried.includes(id)) { tried.push(id); store.set('tried', JSON.stringify(tried)); renderProgress(); }
+  }
+  function closePlayer(section) {
+    const player = section.querySelector('.player');
+    if (!player || player.hidden) return;
+    if (document.fullscreenElement) document.exitFullscreen();
+    player.querySelector('iframe').src = 'about:blank';
+    player.hidden = true;
+    section.querySelector('.launch-btn').hidden = false;
+    section.querySelector('.launch-note').hidden = false;
+  }
+  document.querySelectorAll('.launch-btn').forEach(btn => btn.addEventListener('click', () => {
+    const section = btn.closest('section');
+    const player = section.querySelector('.player');
+    player.querySelector('iframe').src = btn.dataset.src;
+    player.querySelector('iframe').title = section.querySelector('.m-h1').textContent;
+    player.hidden = false; btn.hidden = true; section.querySelector('.launch-note').hidden = true;
+    player.scrollIntoView({ behavior: motionReduced() ? 'auto' : 'smooth', block: 'start' });
+    markTried(section.id.replace('page-', ''));
+  }));
+  document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => closePlayer(b.closest('section'))));
+  document.querySelectorAll('[data-fs]').forEach(b => {
+    if (!document.fullscreenEnabled) { b.hidden = true; return; }
+    b.addEventListener('click', () => b.closest('.player').querySelector('iframe').requestFullscreen());
+  });
+
+  // Toggles: skim, readable font, reduce motion
+  const paras = document.querySelectorAll('.m-desc p, .about p');
+  function syncToggles() {
+    const on = { skim: root.dataset.skim === 'on', readable: root.dataset.readable === 'on', motion: root.dataset.motion === 'off' || motionQuery.matches };
+    document.querySelectorAll('[data-toggle]').forEach(b => b.setAttribute('aria-pressed', String(on[b.dataset.toggle])));
+    const m = document.querySelector('[data-toggle="motion"]');
+    m.disabled = motionQuery.matches;
+    m.title = motionQuery.matches ? 'Your device already reduces motion' : '';
+    paras.forEach(p => { if (on.skim) p.tabIndex = 0; else p.removeAttribute('tabindex'); });
+  }
+  document.querySelectorAll('[data-toggle]').forEach(b => b.addEventListener('click', () => {
+    const k = b.dataset.toggle, v = k === 'motion' ? 'off' : 'on';
+    if (root.dataset[k] === v) { delete root.dataset[k]; store.del(k); } else { root.dataset[k] = v; store.set(k, v); }
+    syncToggles();
+  }));
+  paras.forEach(p => {
+    const toggle = () => { if (root.dataset.skim === 'on') p.classList.toggle('open'); };
+    p.addEventListener('click', toggle);
+    p.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+  });
+  document.getElementById('resetPrefs').addEventListener('click', () => {
+    ['skim', 'readable', 'motion'].forEach(k => { delete root.dataset[k]; store.del(k); });
+    paras.forEach(p => p.classList.remove('open'));
+    size = 100; root.style.fontSize = ''; store.del('textsize');
+    applyTheme('auto'); syncToggles();
+  });
+  syncToggles();
+  renderProgress();
 </script>
 
 </body>
