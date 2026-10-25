@@ -9,6 +9,7 @@
 <meta property="og:site_name" content="Yamina Dib">
 <meta property="og:title" content="Yamina Dib | Instructional Design Portfolio">
 <meta property="og:description" content="Interactive e-learning modules in business English, cybersecurity, aviation ground safety and insurance, with design documentation.">
+<link rel="canonical" href="https://dibyamina22-ai.github.io/yamina-id-portfolio/">
 <meta property="og:url" content="https://dibyamina22-ai.github.io/yamina-id-portfolio/">
 <meta property="og:image" content="https://dibyamina22-ai.github.io/yamina-id-portfolio/preview.png">
 <meta property="og:image:width" content="1200">
@@ -27,7 +28,7 @@
     var t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t;
     var z = localStorage.getItem('textsize'); if (z) document.documentElement.style.fontSize = z + '%';
     var d = document.documentElement;
-    if (localStorage.getItem('skim') === 'on') d.dataset.skim = 'on';
+    localStorage.removeItem('skim');
     if (localStorage.getItem('readable') === 'on') d.dataset.readable = 'on';
     if (localStorage.getItem('motion') === 'off') d.dataset.motion = 'off';
   } catch (e) {}
@@ -399,13 +400,6 @@
   :root[data-readable="on"] * { font-family: 'Atkinson Hyperlegible', 'IBM Plex Sans', system-ui, sans-serif !important; }
   :root[data-readable="on"] .m-desc p, :root[data-readable="on"] .about p, :root[data-readable="on"] .home-sub { line-height: 1.9; letter-spacing: 0.02em; word-spacing: 0.06em; }
 
-  /* Skim mode */
-  .skim-hint { display: none; margin-bottom: 22px; font-size: 0.85rem; color: var(--fg-muted); }
-  :root[data-skim="on"] .skim-hint { display: block; }
-  :root[data-skim="on"] body[data-page="home"] .skim-hint { display: none; }
-  :root[data-skim="on"] .m-desc p, :root[data-skim="on"] .about p { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; cursor: pointer; }
-  :root[data-skim="on"] .m-desc p.open, :root[data-skim="on"] .about p.open { display: block; -webkit-line-clamp: unset; line-clamp: unset; overflow: visible; }
-
   /* Learning objectives */
   .m-objectives {
     max-width: 64ch;
@@ -536,7 +530,7 @@
   .brand-name { font-size: 1.02rem; }
   .brand-role { font-size: 0.74rem; color: var(--fg-muted); }
   .top-nav { display: flex; gap: 4px; margin-left: auto; }
-  .top-nav a.nav-link { padding: 8px 14px; border-radius: 999px; font-size: 0.92rem; color: var(--fg-muted); text-decoration: none; transition: background-color .2s ease, color .2s ease; }
+  .top-nav a.nav-link { padding: 8px 11px; border-radius: 999px; font-size: 0.88rem; color: var(--fg-muted); text-decoration: none; transition: background-color .2s ease, color .2s ease; }
   .top-nav a.nav-link:hover { background: var(--bg-raised); color: var(--fg); }
   .top-nav a.nav-link.active { background: var(--bg-raised); color: var(--fg); font-weight: 500; box-shadow: inset 0 -2px 0 var(--ochre); }
   .top-nav a.nav-link:focus-visible, .brand:focus-visible, .prefs-btn:focus-visible, .menu-btn:focus-visible, .circle:focus-visible, .text-link:focus-visible, .sb-actions a:focus-visible, .site-footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -553,7 +547,7 @@
   .page-title + .home-group-sub { margin-bottom: 24px; }
 
   /* Home circles */
-  .circles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; max-width: 760px; margin: 44px 0 0; }
+  .circles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px 20px; max-width: 800px; margin: 44px 0 0; }
   .circle { display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--fg); text-align: center; text-decoration: none; }
   .circle-disc { display: grid; place-items: center; width: 104px; height: 104px; border-radius: 50%; background: var(--bg-raised); border: 1.5px solid var(--line); color: var(--fg); transition: transform .35s cubic-bezier(.16,1,.3,1), border-color .2s ease; }
   .circle-disc svg { width: 38px; height: 38px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
@@ -576,7 +570,7 @@
   .site-footer a { color: var(--fg-muted); text-decoration: none; }
   .site-footer a:hover { color: var(--fg); }
 
-  @media (max-width: 860px) {
+  @media (max-width: 1100px) {
     .site-header { flex-wrap: wrap; gap: 12px; }
     .site-header .menu-btn { display: inline-block; margin-left: auto; }
     .brand-role { display: none; }
@@ -592,6 +586,17 @@
   .sb-card .m-body { min-width: 0; flex: 1; }
   .sb-card .m-docs.sb-docs { margin-top: 14px; padding-top: 0; border-top: 0; }
   .sb-card .m-docs details { max-width: none; margin-top: 0; background: var(--bg); }
+
+  /* CV button, content note, header layout */
+  .header-tools { display: flex; align-items: center; gap: 10px; }
+  .cv-btn { padding: 8px 16px; border-radius: 999px; background: var(--fg); color: var(--bg); font-size: 0.85rem; font-weight: 500; text-decoration: none; }
+  .cv-btn:hover { opacity: .88; }
+  .cv-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .m-source { max-width: 64ch; margin: 18px 0 0; font-size: 0.85rem; line-height: 1.55; color: var(--fg-muted); }
+  @media (max-width: 1100px) { .site-header.open .header-tools { display: flex; flex-wrap: wrap; } .prefs-panel { flex-basis: 100%; } }
+
+  .process-see { display: block; margin-top: 4px; font-size: 0.85rem; color: var(--fg-muted); }
+  .process-see a { color: var(--fg); }
 </style>
 <script data-goatcounter="https://yamina-portfolio.goatcounter.com/count" data-goatcounter-settings='{"no_onload": true}' async src="//gc.zgo.at/count.js"></script>
 </head>
@@ -600,17 +605,21 @@
 <header class="site-header" id="siteHeader">
   <a href="#home" class="brand" aria-label="Yamina Dib, home">
     <span class="brand-mark" aria-hidden="true">Y</span>
-    <span class="brand-text"><span class="brand-name serif">Yamina Dib</span><span class="brand-role">Instructional Designer &amp; Curriculum Developer</span></span>
+    <span class="brand-text"><span class="brand-name serif">Yamina Dib</span><span class="brand-role">Instructional Design &amp; Curriculum Development</span></span>
   </a>
   <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="topNav">Menu</button>
   <nav class="top-nav" id="topNav" aria-label="Main">
     <a href="#home" class="nav-link" data-page="home">Home</a>
     <a href="#modules" class="nav-link" data-page="modules">Modules</a>
     <a href="#storyboards" class="nav-link" data-page="storyboards">Storyboards</a>
+    <a href="#microlearning" class="nav-link" data-page="microlearning">Microlearning</a>
+    <a href="#curriculum" class="nav-link" data-page="curriculum">Curriculum</a>
     <a href="#skills" class="nav-link" data-page="skills">Skills</a>
+    <a href="#process" class="nav-link" data-page="process">Process</a>
     <a href="#about" class="nav-link" data-page="about">About</a>
   </nav>
   <div class="header-tools">
+    <a class="cv-btn" href="downloads/Yamina_Dib_CV.pdf" download>Download CV</a>
     <button type="button" class="prefs-btn" id="prefsBtn" aria-expanded="false" aria-controls="prefsPanel">Preferences</button>
     <div class="prefs-panel" id="prefsPanel" hidden>
       <div class="prefs-title">Learning preferences</div>
@@ -627,7 +636,6 @@
           <button type="button" data-size="reset" aria-label="Default text size">A</button>
           <button type="button" data-size="+" aria-label="Larger text">A+</button>
         </div>
-        <button type="button" class="tog" data-toggle="skim" aria-pressed="false"><span>Skim mode</span><span class="tog-state"></span></button>
         <button type="button" class="tog" data-toggle="readable" aria-pressed="false"><span>Readable font</span><span class="tog-state"></span></button>
         <button type="button" class="tog" data-toggle="motion" aria-pressed="false"><span>Reduce motion</span><span class="tog-state"></span></button>
         <button type="button" class="reset-btn" id="resetPrefs">Reset preferences</button>
@@ -639,13 +647,12 @@
 <div class="app">
   <main class="main">
 
-    <div class="skim-hint">Skim mode is on. Click any paragraph to read it in full.</div>
-
+    
     <!-- HOME -->
     <section class="page" id="page-home">
       <h1 class="home-lede">Designing learning experiences people actually finish.</h1>
       <p class="home-sub">I build e-learning modules that take a dry compliance requirement or a technical skill and turn it into something a learner can sit through, understand, and use the next day at work. Four self-initiated projects below, built end to end as sole designer and developer: instructional strategy, scriptwriting, and development in Articulate Storyline 360. Each module comes with its full design document and storyboard.</p>
-      <div class="home-focus">Currently based in Algiers, open to Instructional Design and Curriculum Development roles, remote or on-site, anywhere.</div>
+      <div class="home-focus">Currently based in Algiers (UTC+1), open to Instructional Design and Curriculum Development roles, remote or on-site.</div>
 
       
       <nav class="circles" aria-label="Portfolio sections">
@@ -659,15 +666,30 @@
           <span class="circle-label">Storyboards</span>
           <span class="circle-sub">Design documents</span>
         </a>
+        <a class="circle" href="#microlearning" style="--c:#7A6A9B">
+          <span class="circle-disc"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="7"/><path d="M12 9v4l2.5 2M9 3h6"/></svg></span>
+          <span class="circle-label">Microlearning</span>
+          <span class="circle-sub">Short-form learning</span>
+        </a>
+        <a class="circle" href="#curriculum" style="--c:#8C6A3F">
+          <span class="circle-disc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4z"/><path d="M8 8h7M8 12h7"/></svg></span>
+          <span class="circle-label">Curriculum Development</span>
+          <span class="circle-sub">Course design</span>
+        </a>
         <a class="circle" href="#skills" style="--c:#3E6E93">
           <span class="circle-disc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg></span>
           <span class="circle-label">Skills</span>
           <span class="circle-sub">Tools and methods</span>
         </a>
+        <a class="circle" href="#process" style="--c:#5A7D4F">
+          <span class="circle-disc"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/><path d="M7 12h3M14 12h3"/></svg></span>
+          <span class="circle-label">Process</span>
+          <span class="circle-sub">How I design</span>
+        </a>
         <a class="circle" href="#about" style="--c:#B5772B">
           <span class="circle-disc"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></span>
           <span class="circle-label">About</span>
-          <span class="circle-sub">Background and process</span>
+          <span class="circle-sub">Background</span>
         </a>
       </nav>
 
@@ -683,19 +705,10 @@
       <p>I taught English to classes of 15–30 adult and young-adult students, and it's that classroom, watching what actually lands with a learner versus what just sounds good in a lesson plan, that pulled me toward instructional design. A course only works if someone gets through it and remembers something afterward; everything else is decoration.</p>
       <p>My Master's research looked at how teachers' formative feedback affects learners' spoken performance in EFL classrooms, which is really a question about how adults learn from feedback loops, not just language. That question shows up again in every module I build: where does a learner need a nudge, a check, a chance to get something wrong safely before it matters.</p>
       <p class="muted">The four modules in this portfolio are self-directed projects, built to demonstrate range across adult learning contexts: a soft-skills topic, a compliance topic, a technical safety topic, and a new-hire onboarding topic, rather than commissioned client work. I'm currently looking for the first real one.</p>
-      <div class="about-process">
-        <h3 class="serif">My process</h3>
-        <ol>
-          <li><strong>Analyse the need.</strong> I start with who the learners are, the gap they have, where and how they will take the training, and what they already know. Every design document opens with this.</li>
-          <li><strong>Write measurable objectives.</strong> Each objective uses an action verb mapped to Bloom's taxonomy, so an activity or a quiz question can check it.</li>
-          <li><strong>Storyboard and script.</strong> I plan the module screen by screen: the activity type, on-screen text, narration, feedback and timing, and I script the key screens in full.</li>
-          <li><strong>Build in Storyline 360.</strong> I choose the interaction to fit the objective, such as flashcards, drag-and-drop, hotspots or a branching scenario, and I note accessibility needs in the plan, such as keyboard navigation and text alternatives.</li>
-          <li><strong>Plan the evaluation.</strong> Formative quizzes give immediate feedback and a graded assessment sets a pass mark. For Business English I also wrote a Kirkpatrick plan covering reaction, learning, behavior and results.</li>
-        </ol>
-        <p class="process-note">You can see each step in the design document on every module page.</p>
-      </div>
+      
       <dl class="facts">
         <div class="fact"><dt>Based in</dt><dd>Algiers, Algeria</dd></div>
+          <div class="fact"><dt>Time zone</dt><dd>UTC+1, available for remote roles</dd></div>
         <div class="fact"><dt>Currently</dt><dd>Instructional Designer, independent projects</dd></div>
         <div class="fact"><dt>Education</dt><dd>M.A. Didactics, Univ. Abou El Kacem Saâdallah</dd></div>
       </dl>
@@ -715,7 +728,7 @@
           <span><strong>Project</strong> Self-initiated</span>
           <span><strong>Role</strong> Sole designer and developer: instructional strategy, scriptwriting, development</span>
           <span><strong>Tool</strong> Articulate Storyline 360</span>
-          <span><strong>Build time</strong> 27 to 35 hours</span>
+          <span><strong>Build time</strong> About 67 hours</span>
         </div>
       </div>
       <div class="m-objectives">
@@ -745,6 +758,7 @@
           <span class="skill-chip">Storyboard</span>
           <span class="skill-chip">Evaluation plan</span>
       </div>
+      <div class="m-source"><strong>About the content:</strong> portfolio demonstration module, not intended for operational or compliance use.</div>
       
       <a class="launch-btn" href="https://dibyamina22-ai.github.io/yamina-id-portfolio/business-english/index.html" target="_blank" rel="noopener" data-launch>Launch module</a>
       <div class="launch-note">Opens in a new window.</div>
@@ -762,7 +776,7 @@
           <span><strong>Project</strong> Self-initiated</span>
           <span><strong>Role</strong> Sole designer and developer: instructional strategy, scriptwriting, development</span>
           <span><strong>Tool</strong> Articulate Storyline 360</span>
-          <span><strong>Build time</strong> 27 to 35 hours</span>
+          <span><strong>Build time</strong> About 51 hours</span>
         </div>
       </div>
       <div class="m-objectives">
@@ -792,6 +806,7 @@
           <span class="skill-chip">Needs analysis</span>
           <span class="skill-chip">Storyboard</span>
       </div>
+      <div class="m-source"><strong>About the content:</strong> portfolio demonstration module, not intended for operational or compliance use.</div>
       
       <a class="launch-btn" href="https://dibyamina22-ai.github.io/yamina-id-portfolio/cybersecurity/index.html" target="_blank" rel="noopener" data-launch>Launch module</a>
       <div class="launch-note">Opens in a new window.</div>
@@ -809,7 +824,7 @@
           <span><strong>Project</strong> Self-initiated</span>
           <span><strong>Role</strong> Sole designer and developer: instructional strategy, scriptwriting, development</span>
           <span><strong>Tool</strong> Articulate Storyline 360</span>
-          <span><strong>Build time</strong> 27 to 35 hours</span>
+          <span><strong>Build time</strong> About 59 hours</span>
         </div>
       </div>
       <div class="m-objectives">
@@ -838,6 +853,7 @@
           <span class="skill-chip">Learning objectives</span>
           <span class="skill-chip">Storyboard</span>
       </div>
+      <div class="m-source"><strong>About the content:</strong> portfolio demonstration module, not intended for operational or compliance use.</div>
       
       <a class="launch-btn" href="https://dibyamina22-ai.github.io/yamina-id-portfolio/aviation/index.html" target="_blank" rel="noopener" data-launch>Launch module</a>
       <div class="launch-note">Opens in a new window.</div>
@@ -855,7 +871,7 @@
           <span><strong>Project</strong> Self-initiated</span>
           <span><strong>Role</strong> Sole designer and developer: instructional strategy, scriptwriting, development</span>
           <span><strong>Tool</strong> Articulate Storyline 360</span>
-          <span><strong>Build time</strong> 27 to 35 hours</span>
+          <span><strong>Build time</strong> About 45 hours</span>
         </div>
       </div>
       <div class="m-objectives">
@@ -885,6 +901,7 @@
           <span class="skill-chip">Needs analysis</span>
           <span class="skill-chip">Storyboard</span>
       </div>
+      <div class="m-source"><strong>About the content:</strong> portfolio demonstration module, not intended for operational or compliance use.</div>
       
       <a class="launch-btn" href="https://dibyamina22-ai.github.io/yamina-id-portfolio/insurance/index.html" target="_blank" rel="noopener" data-launch>Launch module</a>
       <div class="launch-note">Opens in a new window.</div>
@@ -941,7 +958,7 @@
     <!-- STORYBOARDS -->
     <section class="page" id="page-storyboards">
       <h1 class="page-title serif">Storyboards</h1>
-      <div class="home-group-sub">The planning behind each module: needs analysis, measurable objectives, a screen-by-screen storyboard and production notes. Read it on the module's page or download the Word document.</div>
+      <div class="home-group-sub">The planning behind each module: needs analysis, measurable objectives, a screen-by-screen storyboard and production notes. Open a card to read it here, or download the document.</div>
       <div class="sb-grid">
         <article class="sb-card" style="--m-accent:#3C6E71">
           <div class="m-num">01</div>
@@ -1107,15 +1124,80 @@
       </div>
     </section>
 
+
+
+    <!-- MICROLEARNING -->
+    <section class="page" id="page-microlearning">
+      <h1 class="page-title serif">Microlearning</h1>
+      <div class="home-group-sub">Short, practice-first learning. Part 1 is a consequence-driven simulation. Part 2, a five-part microlearning series with a job aid, is in preparation.</div>
+      <div class="sb-grid">
+        <article class="sb-card" style="--m-accent:#5A7D4F">
+          <div class="m-num">01</div>
+          <div class="m-body">
+            <h2 class="m-title">The First Week: Remote Team Lead Simulation</h2>
+            <div class="m-tag">Branching simulation, about 10 to 12 minutes, over five simulated days. Design stage: storyboard, branching map and design rationale. Not yet built.</div>
+            <div class="m-docs sb-docs"><details>
+          <summary>Read the design overview</summary>
+          <div class="doc-body">
+            <h4>Learner and problem</h4>
+            <ul>
+              <li><strong>Learner:</strong> first-time or early-career team leads (0 to 2 years of leading others) on distributed teams of 4 to 12 people across 2 or 3 time zones.</li>
+              <li><strong>Problem:</strong> new team leads carry in-office habits (vague messages, unplanned calls, silent assumptions), which leads to blocked work, missed deadlines and low trust.</li>
+            </ul>
+            <h4>Learning outcomes</h4>
+            <ol>
+              <li>Clarify an ambiguous status update by asking specific, answerable questions.</li>
+              <li>Design a handoff across time zones so that work is not blocked overnight.</li>
+              <li>De-escalate a public disagreement by moving it to the right channel and closing the loop in writing.</li>
+              <li>Report upward with a structured asynchronous update (status, risks, asks).</li>
+            </ol>
+            <h4>How it works</h4>
+            <ul>
+              <li>Five simulated days, one key decision per day, three options each.</li>
+              <li>Three visible meters (team trust, deadline risk, team energy) change after every decision.</li>
+              <li>A reference library opens on demand, and the simulation logs which items the learner opened and when.</li>
+              <li>No pass or fail score: a debrief shows the learner's decision pattern across the week.</li>
+            </ul>
+          </div>
+        </details></div>
+            <div class="sb-actions"><a href="downloads/Remote_Team_Lead_Simulation_Storyboard.pdf" target="_blank" rel="noopener">Open the PDF</a><a href="downloads/Remote_Team_Lead_Simulation_Storyboard.pdf" download>Download the PDF</a></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- CURRICULUM DEVELOPMENT -->
+    <section class="page" id="page-curriculum">
+      <h1 class="page-title serif">Curriculum Development</h1>
+      <div class="home-group-sub">A curriculum document for the five-part microlearning series and its job aid is in preparation and will be published here.</div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="page" id="page-process">
+      <h1 class="page-title serif">Process</h1>
+      <div class="home-group-sub">How I move from a learning need to a designed module.</div>
+      <div class="about-process">
+        <ol>
+          <li><strong>Needs analysis.</strong> I start with the learners, the gap between what they can do and what the job requires, the context of use and the prerequisites. Every design document opens with this.<span class="process-see">See it in: <a href="#storyboards">Storyboards</a></span></li>
+          <li><strong>Objectives mapped to Bloom’s taxonomy.</strong> Each objective uses an observable verb tied to a level of Bloom’s taxonomy, from remembering and understanding up to applying, analysing and creating. That way every objective has an activity and an assessment item that match it.<span class="process-see">See it in: <a href="#storyboards">Storyboards</a></span></li>
+          <li><strong>Content selection with corpus data.</strong> For language content, I check how words and phrases are actually used in a corpus (the Brown Corpus, searched with AntConc) before deciding what deserves teaching time.</li>
+          <li><strong>Deductive or inductive, chosen per objective.</strong> Deductive: the rule or procedure is stated first, then practised. Inductive: learners meet examples or consequences first and work out the pattern themselves. I use the deductive route for procedures and rules, and the inductive route for register, phrasing and judgment, as in the Remote Team Lead simulation, where practice comes first and content is available on demand.<span class="process-see">See it in: <a href="#microlearning">Microlearning</a></span></li>
+          <li><strong>Storyboard and script.</strong> I plan screen by screen: activity type, on-screen text, narration, feedback and timing, and I script the key screens in full before building in Storyline 360.<span class="process-see">See it in: <a href="#storyboards">Storyboards</a></span></li>
+          <li><strong>Assessment and evaluation.</strong> Formative checks give immediate feedback, and a graded assessment sets the pass mark. Business English also has a Kirkpatrick evaluation plan covering reaction, learning, behavior and results.<span class="process-see">See it in: <a href="#storyboards">Storyboards</a></span></li>
+        </ol>
+      </div>
+    </section>
+
     <footer class="site-footer">
       <a href="mailto:dibyamina22@gmail.com">dibyamina22@gmail.com</a>
       <a href="https://linkedin.com/in/yamina-dib-22769542b" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="downloads/Yamina_Dib_CV.pdf" download>Download CV</a>
     </footer>
   </main>
 </div>
 
 <script>
-  const pages = ['home','modules','storyboards','skills','about','business-english','cybersecurity','aviation','insurance'];
+  const pages = ['home','modules','storyboards','microlearning','curriculum','skills','process','about','business-english','cybersecurity','aviation','insurance'];
   // GoatCounter: count a page view or an event once the script has loaded.
   function gcCount(vars) {
     var tries = 0;
@@ -1231,29 +1313,21 @@
     }
   }));
 
-  // Toggles: skim, readable font, reduce motion
-  const paras = document.querySelectorAll('.m-desc p, .about p');
+  // Toggles: readable font, reduce motion
   function syncToggles() {
-    const on = { skim: root.dataset.skim === 'on', readable: root.dataset.readable === 'on', motion: root.dataset.motion === 'off' || motionQuery.matches };
+    const on = { readable: root.dataset.readable === 'on', motion: root.dataset.motion === 'off' || motionQuery.matches };
     document.querySelectorAll('[data-toggle]').forEach(b => b.setAttribute('aria-pressed', String(on[b.dataset.toggle])));
     const m = document.querySelector('[data-toggle="motion"]');
     m.disabled = motionQuery.matches;
     m.title = motionQuery.matches ? 'Your device already reduces motion' : '';
-    paras.forEach(p => { if (on.skim) p.tabIndex = 0; else p.removeAttribute('tabindex'); });
   }
   document.querySelectorAll('[data-toggle]').forEach(b => b.addEventListener('click', () => {
     const k = b.dataset.toggle, v = k === 'motion' ? 'off' : 'on';
     if (root.dataset[k] === v) { delete root.dataset[k]; store.del(k); } else { root.dataset[k] = v; store.set(k, v); }
     syncToggles();
   }));
-  paras.forEach(p => {
-    const toggle = () => { if (root.dataset.skim === 'on') p.classList.toggle('open'); };
-    p.addEventListener('click', toggle);
-    p.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
-  });
   document.getElementById('resetPrefs').addEventListener('click', () => {
-    ['skim', 'readable', 'motion'].forEach(k => { delete root.dataset[k]; store.del(k); });
-    paras.forEach(p => p.classList.remove('open'));
+    ['readable', 'motion'].forEach(k => { delete root.dataset[k]; store.del(k); });
     size = 100; root.style.fontSize = ''; store.del('textsize');
     applyTheme('auto'); syncToggles();
   });
@@ -1328,7 +1402,7 @@
   function setPrefs(open) { panel.hidden = !open; pbtn.setAttribute('aria-expanded', String(open)); }
   pbtn.addEventListener('click', function (e) { e.stopPropagation(); setPrefs(panel.hidden); });
   panel.addEventListener('click', function (e) { e.stopPropagation(); });
-  document.addEventListener('click', function () { if (!panel.hidden && window.innerWidth > 860) setPrefs(false); });
+  document.addEventListener('click', function () { if (!panel.hidden && window.innerWidth > 1100) setPrefs(false); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) { setPrefs(false); pbtn.focus(); } });
 })();
 </script>
