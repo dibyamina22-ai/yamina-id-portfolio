@@ -1189,7 +1189,6 @@
     </section>
 
     <footer class="site-footer">
-      <a href="mailto:dibyamina22@gmail.com">dibyamina22@gmail.com</a>
       <a href="https://linkedin.com/in/yamina-dib-22769542b" target="_blank" rel="noopener">LinkedIn</a>
       <a href="cv.html" target="_blank" rel="noopener">CV</a>
     </footer>
@@ -1285,9 +1284,11 @@
     if (next) {
       cta.textContent = (tried.length ? 'Continue with Module ' : 'Start with Module ') + '0' + (modules.indexOf(next) + 1) + ' →';
       cta.setAttribute('href', '#' + next);
+      cta.onclick = null;
     } else {
       cta.textContent = "You've tried all four. Get in touch →";
-      cta.setAttribute('href', 'mailto:dibyamina22@gmail.com');
+      cta.setAttribute('href', '#home');
+      cta.onclick = function (e) { e.preventDefault(); var b = document.getElementById('chatLaunch'); if (b) b.click(); };
     }
   }
   function markTried(id) {
@@ -1359,10 +1360,8 @@
 </div>
 <script>
 (function () {
-  // Paste a Formspree form URL here (https://formspree.io/f/xxxxxxx) to send messages
-  // straight to your inbox. While it is empty, the form opens the visitor's email app instead.
-  var ENDPOINT = '';
-  var TO = 'dibyamina22@gmail.com';
+  // Messages go to the owner's inbox through Formspree.
+  var ENDPOINT = 'https://formspree.io/f/xkjjoddo';
   var launch = document.getElementById('chatLaunch'), panel = document.getElementById('chatPanel'),
       closeBtn = document.getElementById('chatClose'), form = document.getElementById('chatForm'),
       status = document.getElementById('chatStatus'), send = document.getElementById('chatSend');
@@ -1377,16 +1376,11 @@
     if (d.get('_gotcha')) return;
     var name = String(d.get('name')).trim(), email = String(d.get('email')).trim(), message = String(d.get('message')).trim();
     if (!name || !/^\S+@\S+\.\S+$/.test(email) || !message) { status.textContent = 'Please add your name, a valid email and a message.'; return; }
-    if (!ENDPOINT) {
-      location.href = 'mailto:' + TO + '?subject=' + encodeURIComponent('Portfolio message from ' + name) +
-        '&body=' + encodeURIComponent(message + '\n\n' + name + ' (' + email + ')');
-      status.textContent = 'Your email app should open with the message ready to send.';
-      return;
-    }
     send.disabled = true; status.textContent = 'Sending...';
+    d.append('_subject', 'Portfolio message from ' + name);
     fetch(ENDPOINT, { method: 'POST', headers: { 'Accept': 'application/json' }, body: d })
       .then(function (r) { if (!r.ok) throw new Error('bad'); form.reset(); status.textContent = 'Thanks, your message is on its way. I will reply by email.'; })
-      .catch(function () { status.textContent = 'Could not send. Please email me at ' + TO + '.'; })
+      .catch(function () { status.textContent = 'Could not send. Please try again in a moment, or message me on LinkedIn.'; })
       .then(function () { send.disabled = false; });
   });
 })();
